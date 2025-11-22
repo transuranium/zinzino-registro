@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Registro de Participantes Zinzino</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: #f4f4f8;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 420px;
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 24px 20px 20px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      }
+
+      .logo {
+        display: block;
+        margin: 0 auto 16px;
+        max-width: 220px;
+        height: auto;
+      }
+
+      h1 {
+        font-size: 1.4rem;
+        text-align: center;
+        margin: 0 0 6px;
+        color: #3a2b60;
+      }
+
+      .subtitle {
+        text-align: center;
+        font-size: 0.9rem;
+        margin-bottom: 18px;
+        color: #666;
+      }
+
+      label {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+        color: #333;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 0.95rem;
+        margin-bottom: 14px;
+        outline: none;
+      }
+
+      input:focus {
+        border-color: #6a3ba8;
+        box-shadow: 0 0 0 2px rgba(106, 59, 168, 0.15);
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 999px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        background: #6a3ba8;
+        color: #fff;
+        margin-top: 4px;
+      }
+
+      button:active {
+        transform: scale(0.98);
+      }
+
+      .note {
+        font-size: 0.8rem;
+        color: #777;
+        margin-top: 10px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <!-- Положи файл логотипа рядом со страницей и назови его zinzino-logo.jpeg -->
+      <img
+        src="zinzino-logo.jpeg"
+        alt="Zinzino Independent Partner"
+        class="logo"
+      />
+
+      <h1>Registro de Participantes</h1>
+      <p class="subtitle">
+        Por favor llena tus datos para completar tu registro.
+      </p>
+
+      <form id="registroForm">
+        <label for="especialidad">Especialidad</label>
+        <input type="text" id="especialidad" name="especialidad" required />
+
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" name="nombre" required />
+
+        <label for="celular">Celular (WhatsApp)</label>
+        <input type="tel" id="celular" name="celular" required />
+
+        <button type="submit">Enviar por WhatsApp</button>
+        <p class="note">
+          Al tocar el botón, se abrirá WhatsApp y tus datos se enviarán al
+          organizador.
+        </p>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("registroForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const especialidad = document
+            .getElementById("especialidad")
+            .value.trim();
+          const nombre = document.getElementById("nombre").value.trim();
+          const celular = document.getElementById("celular").value.trim();
+
+          if (!especialidad || !nombre || !celular) {
+            alert("Por favor completa todos los campos.");
+            return;
+          }
+
+          const mensaje =
+            "Nuevo registro Zinzino\n\n" +
+            "Nombre: " +
+            nombre +
+            "\n" +
+            "Especialidad: " +
+            especialidad +
+            "\n" +
+            "Celular: " +
+            celular;
+
+          const texto = encodeURIComponent(mensaje);
+
+          // Твой номер: +52 1 998 166 7219 → формат WhatsApp: 5219981667219
+          const telefono = "5219981667219";
+          const url = "https://wa.me/" + telefono + "?text=" + texto;
+
+          window.location.href = url;
+        });
+    </script>
+  </body>
+</html>
