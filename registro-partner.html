@@ -23,7 +23,7 @@
 
       .card {
         width: 100%;
-        max-width: 480px;
+        max-width: 520px;
         background: #ffffff;
         border-radius: 16px;
         padding: 24px 20px 24px;
@@ -63,11 +63,11 @@
       input[type="tel"],
       input[type="email"] {
         width: 100%;
-        padding: 10px 12px;
+        padding: 9px 11px;
         border-radius: 10px;
         border: 1px solid #ccc;
-        font-size: 0.95rem;
-        margin-bottom: 14px;
+        font-size: 0.9rem;
+        margin-bottom: 10px;
         outline: none;
       }
 
@@ -103,14 +103,33 @@
       fieldset {
         border: none;
         padding: 0;
-        margin: 0 0 8px;
+        margin: 0 0 10px;
       }
 
       fieldset legend {
         font-size: 0.9rem;
-        font-weight: 600;
+        font-weight: 700;
         margin-bottom: 6px;
         color: #333;
+      }
+
+      .group-title {
+        margin-top: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #555;
+      }
+
+      .row-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      @media (max-width: 480px) {
+        .row-2 {
+          grid-template-columns: 1fr;
+        }
       }
 
       .kits-title {
@@ -215,7 +234,7 @@
   </head>
   <body>
     <div class="card">
-      <!-- Логотип Zinzino рядом с файлом: zinzino-logo.jpeg -->
+      <!-- Лого -->
       <img
         src="zinzino-logo.jpeg"
         alt="Zinzino Independent Partner"
@@ -224,202 +243,270 @@
 
       <h1>Registro de Nuevo Socio</h1>
       <p class="subtitle">
-        Elige tu tipo de registro y el kit que mejor se adapta a tus objetivos.
+        Favor de llenar los datos dependiendo del alta deseada (Persona Física o
+        Empresarial).
       </p>
 
       <form id="registroKitForm">
-        <!-- 1. Выбор частник / компания -->
+        <!-- 1. Tipo de alta -->
         <fieldset>
-          <legend>Tipo de registro</legend>
+          <legend>Tipo de alta</legend>
           <div class="radio-group">
             <label class="radio-option">
               <input
                 type="radio"
                 name="tipoCliente"
-                value="particular"
+                value="persona_fisica"
                 id="tipoParticular"
               />
-              <span>Persona física</span>
+              <span>Persona Física</span>
             </label>
             <label class="radio-option">
               <input
                 type="radio"
                 name="tipoCliente"
-                value="empresa"
+                value="empresarial"
                 id="tipoEmpresa"
               />
-              <span>Empresa / Negocio</span>
+              <span>Empresarial</span>
             </label>
           </div>
         </fieldset>
 
-        <!-- 2. Поля для частника -->
-        <fieldset id="datosParticular" class="hidden">
-          <legend>Datos de persona física</legend>
+        <!-- 2. Alta: Persona Física -->
+        <fieldset id="datosPF" class="hidden">
+          <legend>a) Alta: Persona Física</legend>
 
-          <label for="nombreParticular">Nombre completo</label>
+          <div class="row-2">
+            <div>
+              <label for="pfNombre">Nombre</label>
+              <input type="text" id="pfNombre" name="pfNombre" />
+            </div>
+            <div>
+              <label for="pfSegundoNombre">Segundo Nombre</label>
+              <input type="text" id="pfSegundoNombre" name="pfSegundoNombre" />
+            </div>
+          </div>
+
+          <label for="pfApellidos">Apellidos</label>
+          <input type="text" id="pfApellidos" name="pfApellidos" />
+
+          <label for="pfCorreo">Correo Electrónico</label>
           <input
-            type="text"
-            id="nombreParticular"
-            name="nombreParticular"
-            autocomplete="name"
+            type="email"
+            id="pfCorreo"
+            name="pfCorreo"
+            autocomplete="email"
           />
 
-          <label for="celularParticular">Celular (WhatsApp)</label>
+          <label for="pfTelefono">Teléfono Móvil</label>
           <input
             type="tel"
-            id="celularParticular"
-            name="celularParticular"
+            id="pfTelefono"
+            name="pfTelefono"
             autocomplete="tel"
           />
 
-          <label for="emailParticular">Correo electrónico</label>
-          <input
-            type="email"
-            id="emailParticular"
-            name="emailParticular"
-            autocomplete="email"
-          />
+          <label for="pfRfcCurp">RFC o CURP</label>
+          <input type="text" id="pfRfcCurp" name="pfRfcCurp" />
+
+          <p class="group-title">Dirección</p>
+
+          <label for="pfCalle">Calle y número Int y Ext</label>
+          <input type="text" id="pfCalle" name="pfCalle" />
+
+          <label for="pfPrivada">Nombre de privada o edificio</label>
+          <input type="text" id="pfPrivada" name="pfPrivada" />
+
+          <label for="pfColonia">Colonia</label>
+          <input type="text" id="pfColonia" name="pfColonia" />
+
+          <div class="row-2">
+            <div>
+              <label for="pfCiudad">Ciudad</label>
+              <input type="text" id="pfCiudad" name="pfCiudad" />
+            </div>
+            <div>
+              <label for="pfEstado">Estado</label>
+              <input type="text" id="pfEstado" name="pfEstado" />
+            </div>
+          </div>
+
+          <label for="pfCP">Código postal</label>
+          <input type="text" id="pfCP" name="pfCP" />
         </fieldset>
 
-        <!-- 3. Поля для компании -->
-        <fieldset id="datosEmpresa" class="hidden">
-          <legend>Datos de la empresa</legend>
+        <!-- 3. Alta: Empresarial -->
+        <fieldset id="datosEMP" class="hidden">
+          <legend>b) Alta: Empresarial</legend>
 
-          <label for="nombreEmpresa">Nombre de la empresa</label>
+          <div class="row-2">
+            <div>
+              <label for="emNombre">Nombre</label>
+              <input type="text" id="emNombre" name="emNombre" />
+            </div>
+            <div>
+              <label for="emSegundoNombre">Segundo Nombre</label>
+              <input type="text" id="emSegundoNombre" name="emSegundoNombre" />
+            </div>
+          </div>
+
+          <label for="emApellidos">Apellidos</label>
+          <input type="text" id="emApellidos" name="emApellidos" />
+
+          <div class="row-2">
+            <div>
+              <label for="emRfc">RFC</label>
+              <input type="text" id="emRfc" name="emRfc" />
+            </div>
+            <div>
+              <label for="emRegimenFiscal">Régimen Fiscal</label>
+              <input type="text" id="emRegimenFiscal" name="emRegimenFiscal" />
+            </div>
+          </div>
+
+          <label for="emNombreLegal">Nombre Legal de la Empresa</label>
+          <input type="text" id="emNombreLegal" name="emNombreLegal" />
+
+          <label for="emCorreo">Correo Electrónico</label>
           <input
-            type="text"
-            id="nombreEmpresa"
-            name="nombreEmpresa"
-            autocomplete="organization"
+            type="email"
+            id="emCorreo"
+            name="emCorreo"
+            autocomplete="email"
           />
 
-          <label for="rfcEmpresa">RFC (opcional)</label>
-          <input type="text" id="rfcEmpresa" name="rfcEmpresa" />
-
-          <label for="contactoEmpresa">Nombre de contacto</label>
-          <input
-            type="text"
-            id="contactoEmpresa"
-            name="contactoEmpresa"
-            autocomplete="name"
-          />
-
-          <label for="celularEmpresa">Celular (WhatsApp)</label>
+          <label for="emTelefono">Teléfono Móvil</label>
           <input
             type="tel"
-            id="celularEmpresa"
-            name="celularEmpresa"
+            id="emTelefono"
+            name="emTelefono"
             autocomplete="tel"
           />
 
-          <label for="emailEmpresa">Correo electrónico</label>
-          <input
-            type="email"
-            id="emailEmpresa"
-            name="emailEmpresa"
-            autocomplete="email"
-          />
+          <p class="group-title">Dirección de envío</p>
+
+          <label for="emCalle">Calle y número Int y Ext</label>
+          <input type="text" id="emCalle" name="emCalle" />
+
+          <label for="emPrivada">Nombre de privada o edificio</label>
+          <input type="text" id="emPrivada" name="emPrivada" />
+
+          <label for="emColonia">Colonia</label>
+          <input type="text" id="emColonia" name="emColonia" />
+
+          <div class="row-2">
+            <div>
+              <label for="emCiudad">Ciudad</label>
+              <input type="text" id="emCiudad" name="emCiudad" />
+            </div>
+            <div>
+              <label for="emEstado">Estado</label>
+              <input type="text" id="emEstado" name="emEstado" />
+            </div>
+          </div>
+
+          <label for="emCP">Código postal</label>
+          <input type="text" id="emCP" name="emCP" />
         </fieldset>
 
-        <!-- 4. Выбор одного из трёх тарифов (чекбоксы, но только один) -->
-        <p class="kits-title">Elige uno de los kits de inicio</p>
+        <!-- 4. Paquete de inicio: только один -->
+        <p class="kits-title">Paquete de Inicio (elige solo uno)</p>
         <div class="kits-grid">
-          <!-- BASIC KIT -->
+          <!-- Ultimate Practitioners Kit -->
           <label class="kit-option">
             <div class="kit-header">
               <input
                 type="checkbox"
                 class="kit-checkbox"
                 name="kit"
-                value="BASIC KIT"
+                value="Ultimate Practitioners Kit $24,675"
               />
               <div>
-                <div class="kit-title">BASIC KIT</div>
-                <div class="kit-price">$7,290</div>
-                <div class="kit-credits">30/60 créditos</div>
-              </div>
-            </div>
-            <!-- мини-картинка тарифа -->
-            <img src="1.png" alt="BASIC KIT" class="kit-img" />
-          </label>
-
-          <!-- ADVANCED KIT -->
-          <label class="kit-option">
-            <div class="kit-header">
-              <input
-                type="checkbox"
-                class="kit-checkbox"
-                name="kit"
-                value="ADVANCED KIT"
-              />
-              <div>
-                <div class="kit-title">ADVANCED KIT</div>
-                <div class="kit-price">$19,435</div>
-                <div class="kit-credits">90/180 créditos</div>
-              </div>
-            </div>
-            <img src="2.png" alt="ADVANCED KIT" class="kit-img" />
-          </label>
-
-          <!-- ULTIMATE PARTNERS KIT -->
-          <label class="kit-option">
-            <div class="kit-header">
-              <input
-                type="checkbox"
-                class="kit-checkbox"
-                name="kit"
-                value="ULTIMATE PARTNERS KIT (UPK)"
-              />
-              <div>
-                <div class="kit-title">ULTIMATE PARTNERS KIT (UPK)</div>
+                <div class="kit-title">Ultimate Practitioners Kit</div>
                 <div class="kit-price">$24,675</div>
                 <div class="kit-credits">150/300 créditos</div>
               </div>
             </div>
-            <img src="3.png" alt="ULTIMATE PARTNERS KIT" class="kit-img" />
+            <img src="3.png" alt="Ultimate Practitioners Kit" class="kit-img" />
+          </label>
+
+          <!-- Advanced Kit -->
+          <label class="kit-option">
+            <div class="kit-header">
+              <input
+                type="checkbox"
+                class="kit-checkbox"
+                name="kit"
+                value="Advanced Kit $19,435"
+              />
+              <div>
+                <div class="kit-title">Advanced Kit</div>
+                <div class="kit-price">$19,435</div>
+                <div class="kit-credits">90/180 créditos</div>
+              </div>
+            </div>
+            <img src="2.png" alt="Advanced Kit" class="kit-img" />
+          </label>
+
+          <!-- Basic Kit -->
+          <label class="kit-option">
+            <div class="kit-header">
+              <input
+                type="checkbox"
+                class="kit-checkbox"
+                name="kit"
+                value="Basic Kit $7,290"
+              />
+              <div>
+                <div class="kit-title">Basic Kit</div>
+                <div class="kit-price">$7,290</div>
+                <div class="kit-credits">30/60 créditos</div>
+              </div>
+            </div>
+            <img src="1.png" alt="Basic Kit" class="kit-img" />
           </label>
         </div>
 
         <button type="submit">Guardar registro</button>
         <p class="note">
           Por ahora los datos solo se muestran en pantalla. Luego conectaremos
-          este formulario con tu segunda hoja de Google Sheets.
+          este formulario con la segunda hoja de tu Google Sheets.
         </p>
       </form>
     </div>
 
     <script>
-      // Показ / скрытие блоков «частник / компания»
+      // Mostrar/ocultar bloques según tipo de alta
       const tipoRadios = document.querySelectorAll('input[name="tipoCliente"]');
-      const datosParticular = document.getElementById("datosParticular");
-      const datosEmpresa = document.getElementById("datosEmpresa");
+      const datosPF = document.getElementById("datosPF");
+      const datosEMP = document.getElementById("datosEMP");
 
       function actualizarVisibilidadTipo() {
-        const seleccionado = document.querySelector(
+        const seleccion = document.querySelector(
           'input[name="tipoCliente"]:checked'
         );
 
-        if (!seleccionado) {
-          datosParticular.classList.add("hidden");
-          datosEmpresa.classList.add("hidden");
+        if (!seleccion) {
+          datosPF.classList.add("hidden");
+          datosEMP.classList.add("hidden");
           return;
         }
 
-        if (seleccionado.value === "particular") {
-          datosParticular.classList.remove("hidden");
-          datosEmpresa.classList.add("hidden");
+        if (seleccion.value === "persona_fisica") {
+          datosPF.classList.remove("hidden");
+          datosEMP.classList.add("hidden");
         } else {
-          datosEmpresa.classList.remove("hidden");
-          datosParticular.classList.add("hidden");
+          datosEMP.classList.remove("hidden");
+          datosPF.classList.add("hidden");
         }
       }
 
-      tipoRadios.forEach((radio) => {
-        radio.addEventListener("change", actualizarVisibilidadTipo);
-      });
+      tipoRadios.forEach((r) =>
+        r.addEventListener("change", actualizarVisibilidadTipo)
+      );
 
-      // Чекбоксы: разрешаем выбрать только 1 тариф
+      // Принудительно только один чекбокс (kit)
       const kitCheckboxes = document.querySelectorAll(".kit-checkbox");
       kitCheckboxes.forEach((checkbox) => {
         checkbox.addEventListener("change", function () {
@@ -431,7 +518,7 @@
         });
       });
 
-      // Обработка отправки формы (пока без Google Sheets)
+      // Отправка формы — пока только сбор и вывод данных
       document
         .getElementById("registroKitForm")
         .addEventListener("submit", function (e) {
@@ -441,79 +528,104 @@
             'input[name="tipoCliente"]:checked'
           );
           if (!tipo) {
-            alert("Por favor elige si eres persona física o empresa.");
+            alert(
+              "Por favor elige el tipo de alta (Persona Física o Empresarial)."
+            );
             return;
           }
 
           const datos = {
-            tipoCliente: tipo.value,
+            tipoAlta: tipo.value,
           };
 
-          if (tipo.value === "particular") {
-            const nombre = document
-              .getElementById("nombreParticular")
+          if (tipo.value === "persona_fisica") {
+            // mínimos obligatorios
+            const nombre = document.getElementById("pfNombre").value.trim();
+            const apellidos = document
+              .getElementById("pfApellidos")
               .value.trim();
-            const celular = document
-              .getElementById("celularParticular")
-              .value.trim();
-            const email = document
-              .getElementById("emailParticular")
-              .value.trim();
+            const tel = document.getElementById("pfTelefono").value.trim();
 
-            if (!nombre || !celular) {
+            if (!nombre || !apellidos || !tel) {
               alert(
-                "Por favor llena al menos nombre y celular para persona física."
+                "Para Persona Física llena al menos Nombre, Apellidos y Teléfono Móvil."
               );
               return;
             }
 
             datos.nombre = nombre;
-            datos.celular = celular;
-            datos.email = email;
-          } else {
-            const nombreEmpresa = document
-              .getElementById("nombreEmpresa")
+            datos.segundoNombre = document
+              .getElementById("pfSegundoNombre")
               .value.trim();
-            const contacto = document
-              .getElementById("contactoEmpresa")
-              .value.trim();
-            const celularEmp = document
-              .getElementById("celularEmpresa")
-              .value.trim();
-            const emailEmp = document
-              .getElementById("emailEmpresa")
-              .value.trim();
-            const rfc = document.getElementById("rfcEmpresa").value.trim();
+            datos.apellidos = apellidos;
+            datos.correo = document.getElementById("pfCorreo").value.trim();
+            datos.telefono = tel;
+            datos.rfcCurp = document.getElementById("pfRfcCurp").value.trim();
 
-            if (!nombreEmpresa || !contacto || !celularEmp) {
+            datos.direccion = {
+              calle: document.getElementById("pfCalle").value.trim(),
+              privada: document.getElementById("pfPrivada").value.trim(),
+              colonia: document.getElementById("pfColonia").value.trim(),
+              ciudad: document.getElementById("pfCiudad").value.trim(),
+              estado: document.getElementById("pfEstado").value.trim(),
+              cp: document.getElementById("pfCP").value.trim(),
+            };
+          } else {
+            // empresariales – тоже делаем пару полей обязательными
+            const nombreLegal = document
+              .getElementById("emNombreLegal")
+              .value.trim();
+            const tel = document.getElementById("emTelefono").value.trim();
+            const correo = document.getElementById("emCorreo").value.trim();
+
+            if (!nombreLegal || !tel || !correo) {
               alert(
-                "Por favor llena nombre de la empresa, contacto y celular para empresa."
+                "Para alta Empresarial llena al menos Nombre Legal de la Empresa, Teléfono Móvil y Correo."
               );
               return;
             }
 
-            datos.nombreEmpresa = nombreEmpresa;
-            datos.contacto = contacto;
-            datos.celular = celularEmp;
-            datos.email = emailEmp;
-            datos.rfc = rfc;
+            datos.nombre = document.getElementById("emNombre").value.trim();
+            datos.segundoNombre = document
+              .getElementById("emSegundoNombre")
+              .value.trim();
+            datos.apellidos = document
+              .getElementById("emApellidos")
+              .value.trim();
+            datos.rfc = document.getElementById("emRfc").value.trim();
+            datos.regimenFiscal = document
+              .getElementById("emRegimenFiscal")
+              .value.trim();
+            datos.nombreLegal = nombreLegal;
+            datos.correo = correo;
+            datos.telefono = tel;
+
+            datos.direccionEnvio = {
+              calle: document.getElementById("emCalle").value.trim(),
+              privada: document.getElementById("emPrivada").value.trim(),
+              colonia: document.getElementById("emColonia").value.trim(),
+              ciudad: document.getElementById("emCiudad").value.trim(),
+              estado: document.getElementById("emEstado").value.trim(),
+              cp: document.getElementById("emCP").value.trim(),
+            };
           }
 
           const kitSeleccionado = document.querySelector(
             ".kit-checkbox:checked"
           );
           if (!kitSeleccionado) {
-            alert("Por favor elige uno de los kits.");
+            alert("Por favor elige un Paquete de Inicio.");
             return;
           }
-          datos.kit = kitSeleccionado.value;
+          datos.paqueteInicio = kitSeleccionado.value;
 
-          // Здесь пока просто показываем данные.
-          // Позже сюда добавим fetch() на второй лист Google Таблицы.
+          // Временно просто показываем собранные данные
           alert(
             "Datos listos para enviar:\n\n" + JSON.stringify(datos, null, 2)
           );
           console.log("Registro listo:", datos);
+
+          // Позже здесь добавим fetch() к Apps Script (второй лист).
         });
     </script>
   </body>
