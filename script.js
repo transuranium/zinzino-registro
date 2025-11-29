@@ -5,6 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
   initRegistroPartner();
 });
 
+// Один общий URL для обеих форм
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbwujfN5d-o-ZVSVuG0sDDgR14DP2Ja0bB6DeEpCKaecvJdYPjP9hMYQatwfrGyzMB0BKA/exec";
+
 /**
  * 1) ФОРМА УЧАСТНИКОВ (первый файл, форма с id="registroForm")
  *    Отправка в Google Apps Script + алерт "Registro enviado".
@@ -25,35 +29,28 @@ function initRegistroParticipantes() {
       return;
     }
 
-    // URL твоего Apps Script (как у тебя уже было)
-    const scriptURL =
-      "https://script.google.com/macros/s/AKfycbwBFiFGOMj9E-y7j7s015wKQDUiuUbW_pNnOIOtWnuuRR3bhnWxW8xh8Ydth2gD1NW_CA/exec";
+    // Отправка данных в Google Таблицу (Hoja 1)
+    const formData = new FormData();
+    formData.append("especialidad", especialidad);
+    formData.append("nombre", nombre);
+    formData.append("celular", celular);
 
-    // Отправка данных в Google Таблицу
-    fetch(scriptURL, {
+    fetch(SCRIPT_URL, {
       method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        especialidad: especialidad,
-        nombre: nombre,
-        celular: celular,
-      }),
+      body: formData,
+    }).catch((err) => {
+      console.error("Error envío participantes:", err);
     });
 
     alert("Registro enviado. ¡Gracias!");
-    // Если нужно очищать форму:
+    // Если нужно очищать форму — раскомментируй:
     // registroForm.reset();
   });
 }
 
 /**
  * 2) ФОРМА ПАРТНЁРОВ (второй файл, форма с id="registroKitForm")
- *    Логика показа блоков + выбор только одного пакета.
- *    Пока что только собирает данные и показывает alert + console.log,
- *    как в твоём исходном коде. Когда скажешь – добавим сюда fetch().
+ *    Логика показа блоков + выбор только одного пакета + отправка в Hoja 2.
  */
 function initRegistroPartner() {
   const registroKitForm = document.getElementById("registroKitForm");
@@ -100,7 +97,7 @@ function initRegistroPartner() {
     });
   });
 
-  // Отправка формы — пока только сбор и вывод данных
+  // Отправка формы партнёров
   registroKitForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -166,11 +163,11 @@ function initRegistroPartner() {
       datos.regimenFiscal = document
         .getElementById("emRegimenFiscal")
         .value.trim();
-      datos.nombreLegal = nombreLegal;
+      datos.nombreLegalEmpresa = nombreLegal;
       datos.correo = correo;
       datos.telefono = tel;
 
-      datos.direccionEnvio = {
+      datos.direccion = {
         calle: document.getElementById("emCalle").value.trim(),
         privada: document.getElementById("emPrivada").value.trim(),
         colonia: document.getElementById("emColonia").value.trim(),
@@ -187,10 +184,47 @@ function initRegistroPartner() {
     }
     datos.paqueteInicio = kitSeleccionado.value;
 
-    // Пока просто показываем данные, как было
-    alert("Datos listos para enviar:\n\n" + JSON.stringify(datos, null, 2));
-    console.log("Registro listo:", datos);
+    // Готовим данные для отправки в Hoja 2
+    const formData = new FormData();
+    formData.append("formType", "partner"); // чтобы сервер понял, что это вторая форма
 
-    // Здесь позже добавим fetch() к Apps Script (второй лист).
+    // плоские поля
+    formData.append("tipoAlta", datos.tipoAlta);
+    formData.append("nombre", datos.nombre || "");
+    formData.append("segundoNombre", datos.segundoNombre || "");
+    formData.append("apellidos", datos.apellidos || "");
+    formData.append("correo", datos.correo || "");
+    formData.append("telefono", datos.telefono || "");
+    formData.append("rfcCurp", datos.rfcCurp || datos.rfc || "");
+    formData.append("regimenFiscal", datos.regimenFiscal || "");
+    formData.append("nombreLegalEmpresa", datos.nombreLegalEmpresa || "");
+    formData.append("paqueteInicio", datos.paqueteInicio || "");
+
+    // адрес (для PF или Empresarial — структура одинаковая)
+    if (datos.direccion) {
+      formData.append("calle", datos.direccion.calle || "");
+      formData.append("privada", datos.direccion.privada || "");
+      formData.append("colonia", datos.direccion.colonia || "");
+      formData.append("ciudad", datos.direccion.ciudad || "");
+      formData.append("estado", datos.direccion.estado || "");
+      formData.append("cp", datos.direccion.cp || "");
+    }
+
+    // Отправка в Apps Script
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      body: formData,
+    })
+      .then(() => {
+        alert("Registro guardado correctamente.");
+        registroKitForm.reset();
+        datosPF.classList.add("hidden");
+        datosEMP.classList.add("hidden");
+        kitCheckboxes.forEach((c) => (c.checked = false));
+      })
+      .catch((err) => {
+        console.error("Error envío partner:", err);
+        alert("Error al guardar registro.");
+      });
   });
 }
