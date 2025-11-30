@@ -7,7 +7,7 @@ const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbwujfN5d-o-ZVSVuG0sDDgR14DP2Ja0bB6DeEpCKaecvJdYPjP9hMYQatwfrGyzMB0BKA/exec";
 
 /* ==========================================================
-   1) ФОРМА УЧАСТНИКОВ (Hoja 1)
+   1) ФОРМА УЧАСТНИКОВ (Hoja 1) — JSON
    ========================================================== */
 function initRegistroParticipantes() {
   const registroForm = document.getElementById("registroForm");
@@ -32,13 +32,10 @@ function initRegistroParticipantes() {
       celular,
     };
 
-    const body = new URLSearchParams();
-    Object.keys(data).forEach((k) => body.append(k, data[k] || ""));
-
     fetch(SCRIPT_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: body.toString(),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     }).catch((err) => console.error("Error envío participantes:", err));
 
     alert("Registro enviado. ¡Gracias!");
@@ -47,7 +44,7 @@ function initRegistroParticipantes() {
 }
 
 /* ==========================================================
-   2) ФОРМА PARTNER (Hoja 2)
+   2) ФОРМА PARTNER (Hoja 2) — JSON
    ========================================================== */
 function initRegistroPartner() {
   const registroKitForm = document.getElementById("registroKitForm");
@@ -106,6 +103,7 @@ function initRegistroPartner() {
       correo: "",
       telefono: "",
       rfcCurp: "",
+      rfc: "",
       regimenFiscal: "",
       nombreLegalEmpresa: "",
       calle: "",
@@ -140,7 +138,7 @@ function initRegistroPartner() {
         .getElementById("emSegundoNombre")
         .value.trim();
       datos.apellidos = document.getElementById("emApellidos").value.trim();
-      datos.rfcCurp = document.getElementById("emRfc").value.trim();
+      datos.rfc = document.getElementById("emRfc").value.trim();
       datos.regimenFiscal = document
         .getElementById("emRegimenFiscal")
         .value.trim();
@@ -167,13 +165,10 @@ function initRegistroPartner() {
 
     datos.partnerInvito = document.getElementById("partnerInvito").value.trim();
 
-    const body = new URLSearchParams();
-    Object.keys(datos).forEach((k) => body.append(k, datos[k] || ""));
-
     fetch(SCRIPT_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: body.toString(),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(datos),
     })
       .then(() => {
         alert("Registro guardado correctamente.");
