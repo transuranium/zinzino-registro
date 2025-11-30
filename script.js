@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ОДИН общий URL
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbwujfN5d-o-ZVSVuG0sDDgR14DP2Ja0bB6DeEpCKaecvJdYPjP9hMYQatwfrGyzMB0BKA/exec";
+  "https://script.google.com/macros/s/AKfycbwqrGe0v-rhKIH8do4vF2mwzdZ_0Ykk5GlAO6BkCtsMs15kiFanX4ML8sGLJFuO1JSd2Q/exec";
 
 /* ==========================================================
    1) ФОРМА УЧАСТНИКОВ (Hoja 1)
