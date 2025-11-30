@@ -43,8 +43,7 @@ function initRegistroParticipantes() {
     });
 
     alert("Registro enviado. ¡Gracias!");
-    // Если нужно очищать форму — раскомментируй:
-    // registroForm.reset();
+    // registroForm.reset(); // если нужно очищать
   });
 }
 
@@ -109,6 +108,8 @@ function initRegistroPartner() {
 
     const datos = {
       tipoAlta: tipo.value,
+      regimenFiscal: "",
+      nombreLegalEmpresa: "",
     };
 
     if (tipo.value === "persona_fisica") {
@@ -142,7 +143,7 @@ function initRegistroPartner() {
         cp: document.getElementById("pfCP").value.trim(),
       };
     } else {
-      // empresariales – тоже делаем пару полей обязательными
+      // Empresarial
       const nombreLegal = document.getElementById("emNombreLegal").value.trim();
       const tel = document.getElementById("emTelefono").value.trim();
       const correo = document.getElementById("emCorreo").value.trim();
