@@ -184,6 +184,8 @@ function initRegistroPartner() {
     }
     datos.paqueteInicio = kitSeleccionado.value;
 
+    datos.partnerInvito = document.getElementById("partnerInvito").value.trim();
+
     // Готовим данные для отправки в Hoja 2
     const formData = new FormData();
     formData.append("formType", "partner"); // чтобы сервер понял, что это вторая форма
@@ -199,6 +201,7 @@ function initRegistroPartner() {
     formData.append("regimenFiscal", datos.regimenFiscal || "");
     formData.append("nombreLegalEmpresa", datos.nombreLegalEmpresa || "");
     formData.append("paqueteInicio", datos.paqueteInicio || "");
+    formData.append("partnerInvito", datos.partnerInvito || "");
 
     // адрес (для PF или Empresarial — структура одинаковая)
     if (datos.direccion) {
