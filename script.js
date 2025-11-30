@@ -3,15 +3,18 @@ document.addEventListener("DOMContentLoaded", () => {
   initRegistroPartner();
 });
 
+// ОДИН общий URL
 const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbwujfN5d-o-ZVSVuG0sDDgR14DP2Ja0bB6DeEpCKaecvJdYPjP9hMYQatwfrGyzMB0BKA/exec";
 
-/* ====================== Hoja 1 ====================== */
+/* ==========================================================
+   1) ФОРМА УЧАСТНИКОВ (Hoja 1)
+   ========================================================== */
 function initRegistroParticipantes() {
   const registroForm = document.getElementById("registroForm");
   if (!registroForm) return;
 
-  registroForm.addEventListener("submit", async (e) => {
+  registroForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     const especialidad = document.getElementById("especialidad").value.trim();
@@ -23,24 +26,26 @@ function initRegistroParticipantes() {
       return;
     }
 
-    const payload = {
-      formType: "participantes",
-      especialidad,
-      nombre,
-      celular,
-    };
+    const data = new URLSearchParams();
+    data.append("formType", "participantes");
+    data.append("especialidad", especialidad);
+    data.append("nombre", nombre);
+    data.append("celular", celular);
 
-    await fetch(SCRIPT_URL, {
+    fetch(SCRIPT_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    }).catch((err) => console.error("Error envío participantes:", err));
+      body: data, // ← классический form-POST
+    }).catch((err) => {
+      console.error("Error envío participantes:", err);
+    });
 
     alert("Registro enviado. ¡Gracias!");
   });
 }
 
-/* ====================== Hoja 2 ====================== */
+/* ==========================================================
+   2) ФОРМА PARTNER (Hoja 2)
+   ========================================================== */
 function initRegistroPartner() {
   const registroKitForm = document.getElementById("registroKitForm");
   if (!registroKitForm) return;
@@ -49,6 +54,7 @@ function initRegistroPartner() {
   const datosPF = document.getElementById("datosPF");
   const datosEMP = document.getElementById("datosEMP");
 
+  // показать / скрыть PF / EMP
   function actualizarVisibilidadTipo() {
     const tipo = document.querySelector('input[name="tipoCliente"]:checked');
     if (!tipo) {
@@ -69,6 +75,7 @@ function initRegistroPartner() {
     r.addEventListener("change", actualizarVisibilidadTipo)
   );
 
+  // только один kit
   const kitCheckboxes = document.querySelectorAll(".kit-checkbox");
   kitCheckboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", function () {
@@ -80,12 +87,12 @@ function initRegistroPartner() {
     });
   });
 
-  registroKitForm.addEventListener("submit", async (e) => {
+  registroKitForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     const tipo = document.querySelector('input[name="tipoCliente"]:checked');
     if (!tipo) {
-      alert("Por favor elige el tipo de alta.");
+      alert("Por favor elige el tipo de alta (Persona Física o Empresarial).");
       return;
     }
 
@@ -95,83 +102,94 @@ function initRegistroPartner() {
       return;
     }
 
-    let payload = {
-      formType: "partner",
-      tipoAlta: tipo.value,
-      nombre: "",
-      segundoNombre: "",
-      apellidos: "",
-      correo: "",
-      telefono: "",
-      rfcCurp: "",
-      rfc: "",
-      regimenFiscal: "",
-      nombreLegalEmpresa: "",
-      calle: "",
-      privada: "",
-      colonia: "",
-      ciudad: "",
-      estado: "",
-      cp: "",
-      paqueteInicio: kit.value,
-      partnerInvito: document.getElementById("partnerInvito").value.trim(),
-    };
+    // === собираем ДАННЫЕ (PF или EMP) ===
+    let nombre = "";
+    let segundoNombre = "";
+    let apellidos = "";
+    let correo = "";
+    let telefono = "";
+    let rfcCurp = "";
+    let rfc = "";
+    let regimenFiscal = "";
+    let nombreLegalEmpresa = "";
+    let calle = "";
+    let privada = "";
+    let colonia = "";
+    let ciudad = "";
+    let estado = "";
+    let cp = "";
 
     if (tipo.value === "persona_fisica") {
-      payload.nombre = document.getElementById("pfNombre").value.trim();
-      payload.segundoNombre = document
-        .getElementById("pfSegundoNombre")
-        .value.trim();
-      payload.apellidos = document.getElementById("pfApellidos").value.trim();
-      payload.correo = document.getElementById("pfCorreo").value.trim();
-      payload.telefono = document.getElementById("pfTelefono").value.trim();
-      payload.rfcCurp = document.getElementById("pfRfcCurp").value.trim();
+      nombre = document.getElementById("pfNombre").value.trim();
+      segundoNombre = document.getElementById("pfSegundoNombre").value.trim();
+      apellidos = document.getElementById("pfApellidos").value.trim();
+      correo = document.getElementById("pfCorreo").value.trim();
+      telefono = document.getElementById("pfTelefono").value.trim();
+      rfcCurp = document.getElementById("pfRfcCurp").value.trim();
 
-      payload.calle = document.getElementById("pfCalle").value.trim();
-      payload.privada = document.getElementById("pfPrivada").value.trim();
-      payload.colonia = document.getElementById("pfColonia").value.trim();
-      payload.ciudad = document.getElementById("pfCiudad").value.trim();
-      payload.estado = document.getElementById("pfEstado").value.trim();
-      payload.cp = document.getElementById("pfCP").value.trim();
+      calle = document.getElementById("pfCalle").value.trim();
+      privada = document.getElementById("pfPrivada").value.trim();
+      colonia = document.getElementById("pfColonia").value.trim();
+      ciudad = document.getElementById("pfCiudad").value.trim();
+      estado = document.getElementById("pfEstado").value.trim();
+      cp = document.getElementById("pfCP").value.trim();
     } else {
-      payload.nombre = document.getElementById("emNombre").value.trim();
-      payload.segundoNombre = document
-        .getElementById("emSegundoNombre")
-        .value.trim();
-      payload.apellidos = document.getElementById("emApellidos").value.trim();
-      payload.rfc = document.getElementById("emRfc").value.trim();
-      payload.regimenFiscal = document
-        .getElementById("emRegimenFiscal")
-        .value.trim();
-      payload.nombreLegalEmpresa = document
+      nombre = document.getElementById("emNombre").value.trim();
+      segundoNombre = document.getElementById("emSegundoNombre").value.trim();
+      apellidos = document.getElementById("emApellidos").value.trim();
+      rfc = document.getElementById("emRfc").value.trim();
+      regimenFiscal = document.getElementById("emRegimenFiscal").value.trim();
+      nombreLegalEmpresa = document
         .getElementById("emNombreLegal")
         .value.trim();
-      payload.correo = document.getElementById("emCorreo").value.trim();
-      payload.telefono = document.getElementById("emTelefono").value.trim();
+      correo = document.getElementById("emCorreo").value.trim();
+      telefono = document.getElementById("emTelefono").value.trim();
 
-      payload.calle = document.getElementById("emCalle").value.trim();
-      payload.privada = document.getElementById("emPrivada").value.trim();
-      payload.colonia = document.getElementById("emColonia").value.trim();
-      payload.ciudad = document.getElementById("emCiudad").value.trim();
-      payload.estado = document.getElementById("emEstado").value.trim();
-      payload.cp = document.getElementById("emCP").value.trim();
+      calle = document.getElementById("emCalle").value.trim();
+      privada = document.getElementById("emPrivada").value.trim();
+      colonia = document.getElementById("emColonia").value.trim();
+      ciudad = document.getElementById("emCiudad").value.trim();
+      estado = document.getElementById("emEstado").value.trim();
+      cp = document.getElementById("emCP").value.trim();
     }
 
-    await fetch(SCRIPT_URL, {
+    const partnerInvito = document.getElementById("partnerInvito").value.trim();
+
+    const data = new URLSearchParams();
+    data.append("formType", "partner");
+    data.append("tipoAlta", tipo.value);
+    data.append("nombre", nombre);
+    data.append("segundoNombre", segundoNombre);
+    data.append("apellidos", apellidos);
+    data.append("correo", correo);
+    data.append("telefono", telefono);
+    data.append("rfcCurp", rfcCurp);
+    data.append("rfc", rfc);
+    data.append("regimenFiscal", regimenFiscal);
+    data.append("nombreLegalEmpresa", nombreLegalEmpresa);
+    data.append("calle", calle);
+    data.append("privada", privada);
+    data.append("colonia", colonia);
+    data.append("ciudad", ciudad);
+    data.append("estado", estado);
+    data.append("cp", cp);
+    data.append("paqueteInicio", kit.value);
+    data.append("partnerInvito", partnerInvito); // ← колонка R
+
+    fetch(SCRIPT_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    }).catch((err) => {
-      console.error("Error envío partner:", err);
-      alert("Error al guardar registro.");
-      return;
-    });
-
-    alert("Registro guardado correctamente.");
-
-    registroKitForm.reset();
-    datosPF.classList.add("hidden");
-    datosEMP.classList.add("hidden");
-    kitCheckboxes.forEach((c) => (c.checked = false));
+      body: data, // e.parameter.* на стороне Apps Script
+    })
+      .then(() => {
+        alert("Registro guardado correctamente.");
+        registroKitForm.reset();
+        datosPF.classList.add("hidden");
+        datosEMP.classList.add("hidden");
+        kitCheckboxes.forEach((c) => (c.checked = false));
+      })
+      .catch((err) => {
+        console.error("Error envío partner:", err);
+        alert("Error al guardar registro.");
+      });
   });
 }
