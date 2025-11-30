@@ -35,8 +35,6 @@ function initRegistroParticipantes() {
     fetch(SCRIPT_URL, {
       method: "POST",
       body: data,
-    }).catch((err) => {
-      console.error("Error envío participantes:", err);
     });
 
     alert("Registro enviado. ¡Gracias!");
@@ -54,7 +52,6 @@ function initRegistroPartner() {
   const datosPF = document.getElementById("datosPF");
   const datosEMP = document.getElementById("datosEMP");
 
-  // показать / скрыть PF / EMP
   function actualizarVisibilidadTipo() {
     const tipo = document.querySelector('input[name="tipoCliente"]:checked');
     if (!tipo) {
@@ -75,7 +72,6 @@ function initRegistroPartner() {
     r.addEventListener("change", actualizarVisibilidadTipo)
   );
 
-  // только один kit
   const kitCheckboxes = document.querySelectorAll(".kit-checkbox");
   kitCheckboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", function () {
@@ -124,7 +120,6 @@ function initRegistroPartner() {
       datos.correo = pfCorreo.value.trim();
       datos.telefono = pfTelefono.value.trim();
       datos.rfcCurp = pfRfcCurp.value.trim();
-
       datos.calle = pfCalle.value.trim();
       datos.privada = pfPrivada.value.trim();
       datos.colonia = pfColonia.value.trim();
@@ -140,7 +135,6 @@ function initRegistroPartner() {
       datos.nombreLegalEmpresa = emNombreLegal.value.trim();
       datos.correo = emCorreo.value.trim();
       datos.telefono = emTelefono.value.trim();
-
       datos.calle = emCalle.value.trim();
       datos.privada = emPrivada.value.trim();
       datos.colonia = emColonia.value.trim();
@@ -158,10 +152,9 @@ function initRegistroPartner() {
 
     datos.partnerInvito = partnerInvito.value.trim();
 
-    // отправка
     const data = new URLSearchParams();
     data.append("formType", "partner");
-    Object.keys(datos).forEach((key) => data.append(key, datos[key] || ""));
+    Object.keys(datos).forEach((key) => data.append(key, datos[key]));
 
     await fetch(SCRIPT_URL, {
       method: "POST",
@@ -170,7 +163,7 @@ function initRegistroPartner() {
 
     alert("Registro guardado correctamente.");
 
-    // СБРОС — теперь ПОСЛЕ отправки, правильно
+    // ← ВАЖНО: reset только ПОСЛЕ отправки
     registroKitForm.reset();
     datosPF.classList.add("hidden");
     datosEMP.classList.add("hidden");
