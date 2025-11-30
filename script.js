@@ -3,11 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
   initRegistroPartner();
 });
 
+// ОДИН общий URL
 const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbwujfN5d-o-ZVSVuG0sDDgR14DP2Ja0bB6DeEpCKaecvJdYPjP9hMYQatwfrGyzMB0BKA/exec";
 
 /* ==========================================================
-   1) ФОРМА УЧАСТНИКОВ (Hoja 1) — JSON
+   1) ФОРМА УЧАСТНИКОВ (Hoja 1) — ШЛЁМ URL-ENCODED
    ========================================================== */
 function initRegistroParticipantes() {
   const registroForm = document.getElementById("registroForm");
@@ -25,18 +26,18 @@ function initRegistroParticipantes() {
       return;
     }
 
-    const data = {
-      formType: "participantes",
-      especialidad,
-      nombre,
-      celular,
-    };
+    const data = new URLSearchParams();
+    data.append("formType", "participantes");
+    data.append("especialidad", especialidad);
+    data.append("nombre", nombre);
+    data.append("celular", celular);
 
     fetch(SCRIPT_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    }).catch((err) => console.error("Error envío participantes:", err));
+      body: data, // → e.parameter.*
+    }).catch((err) => {
+      console.error("Error envío participantes:", err);
+    });
 
     alert("Registro enviado. ¡Gracias!");
     // registroForm.reset();
@@ -44,7 +45,7 @@ function initRegistroParticipantes() {
 }
 
 /* ==========================================================
-   2) ФОРМА PARTNER (Hoja 2) — JSON
+   2) ФОРМА PARTNER (Hoja 2) — ТОЖЕ URL-ENCODED
    ========================================================== */
 function initRegistroPartner() {
   const registroKitForm = document.getElementById("registroKitForm");
@@ -75,27 +76,26 @@ function initRegistroPartner() {
   );
 
   const kitCheckboxes = document.querySelectorAll(".kit-checkbox");
-  kitCheckboxes.forEach((box) =>
-    box.addEventListener("change", function () {
+  kitCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", function () {
       if (this.checked) {
-        kitCheckboxes.forEach((c) => {
-          if (c !== this) c.checked = false;
+        kitCheckboxes.forEach((other) => {
+          if (other !== this) other.checked = false;
         });
       }
-    })
-  );
+    });
+  });
 
   registroKitForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     const tipo = document.querySelector('input[name="tipoCliente"]:checked');
     if (!tipo) {
-      alert("Selecciona Persona Física o Empresarial.");
+      alert("Por favor elige el tipo de alta (Persona Física o Empresarial).");
       return;
     }
 
     const datos = {
-      formType: "partner",
       tipoAlta: tipo.value,
       nombre: "",
       segundoNombre: "",
@@ -158,17 +158,37 @@ function initRegistroPartner() {
 
     const kit = document.querySelector(".kit-checkbox:checked");
     if (!kit) {
-      alert("Selecciona un paquete.");
+      alert("Por favor elige un Paquete de Inicio.");
       return;
     }
     datos.paqueteInicio = kit.value;
 
     datos.partnerInvito = document.getElementById("partnerInvito").value.trim();
 
+    const data = new URLSearchParams();
+    data.append("formType", "partner");
+    data.append("tipoAlta", datos.tipoAlta);
+    data.append("nombre", datos.nombre);
+    data.append("segundoNombre", datos.segundoNombre);
+    data.append("apellidos", datos.apellidos);
+    data.append("correo", datos.correo);
+    data.append("telefono", datos.telefono);
+    data.append("rfcCurp", datos.rfcCurp);
+    data.append("rfc", datos.rfc);
+    data.append("regimenFiscal", datos.regimenFiscal);
+    data.append("nombreLegalEmpresa", datos.nombreLegalEmpresa);
+    data.append("calle", datos.calle);
+    data.append("privada", datos.privada);
+    data.append("colonia", datos.colonia);
+    data.append("ciudad", datos.ciudad);
+    data.append("estado", datos.estado);
+    data.append("cp", datos.cp);
+    data.append("paqueteInicio", datos.paqueteInicio);
+    data.append("partnerInvito", datos.partnerInvito);
+
     fetch(SCRIPT_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(datos),
+      body: data, // → e.parameter.*
     })
       .then(() => {
         alert("Registro guardado correctamente.");
