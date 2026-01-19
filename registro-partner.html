@@ -6,14 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <style>
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
       body {
         margin: 0;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         background: #f4f4f8;
         display: flex;
         justify-content: center;
@@ -61,7 +58,8 @@
 
       input[type="text"],
       input[type="tel"],
-      input[type="email"] {
+      input[type="email"],
+      textarea {
         width: 100%;
         padding: 9px 11px;
         border-radius: 10px;
@@ -69,11 +67,18 @@
         font-size: 0.9rem;
         margin-bottom: 10px;
         outline: none;
+        font-family: inherit;
+      }
+
+      textarea {
+        min-height: 110px;
+        resize: vertical;
       }
 
       input[type="text"]:focus,
       input[type="tel"]:focus,
-      input[type="email"]:focus {
+      input[type="email"]:focus,
+      textarea:focus {
         border-color: #6a3ba8;
         box-shadow: 0 0 0 2px rgba(106, 59, 168, 0.15);
       }
@@ -96,9 +101,7 @@
         cursor: pointer;
       }
 
-      .radio-option input {
-        margin: 0;
-      }
+      .radio-option input { margin: 0; }
 
       fieldset {
         border: none;
@@ -127,9 +130,7 @@
       }
 
       @media (max-width: 480px) {
-        .row-2 {
-          grid-template-columns: 1fr;
-        }
+        .row-2 { grid-template-columns: 1fr; }
       }
 
       .kits-title {
@@ -147,17 +148,20 @@
       }
 
       @media (min-width: 640px) {
-        .kits-grid {
-          grid-template-columns: 1fr 1fr;
-        }
+        .kits-grid { grid-template-columns: 1fr 1fr; }
+      }
+
+      @media (min-width: 960px) {
+        .card { max-width: 980px; }
+        .kits-grid { grid-template-columns: 1fr 1fr 1fr; }
       }
 
       .kit-option {
         border-radius: 12px;
         border: 1px solid #ddd;
-        padding: 8px 8px 10px;
+        padding: 10px;
         cursor: pointer;
-        transition: box-shadow 0.15s ease, border-color 0.15s ease;
+        transition: box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
         background: #faf8ff;
       }
 
@@ -166,41 +170,114 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
       }
 
+      .kit-option.selected {
+        border-color: #6a3ba8;
+        box-shadow: 0 4px 14px rgba(106, 59, 168, 0.18);
+        background: #ffffff;
+      }
+
       .kit-header {
         display: flex;
-        align-items: center;
-        gap: 8px;
+        align-items: flex-start;
+        gap: 10px;
         margin-bottom: 6px;
       }
 
-      .kit-header input[type="checkbox"] {
+      .kit-header input[type="radio"] {
         width: 18px;
         height: 18px;
-        margin: 0;
+        margin: 3px 0 0;
+        flex: 0 0 auto;
       }
 
       .kit-title {
         font-size: 0.9rem;
-        font-weight: 700;
+        font-weight: 800;
         color: #3a2b60;
+        line-height: 1.15;
       }
 
       .kit-price {
         font-size: 0.85rem;
-        font-weight: 600;
+        font-weight: 700;
         color: #444;
+        margin-top: 2px;
       }
 
-      .kit-credits {
+      .kit-meta {
         font-size: 0.78rem;
-        color: #777;
-        margin-bottom: 4px;
+        color: #666;
+        margin-top: 2px;
+        line-height: 1.25;
+      }
+
+      .kit-description {
+        font-size: 0.82rem;
+        color: #555;
+        margin: 6px 2px 4px;
+        line-height: 1.35;
+        white-space: pre-line;
+      }
+
+      .kit-badge {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: rgba(106, 59, 168, 0.12);
+        color: #3a2b60;
+        margin-top: 4px;
       }
 
       .kit-img {
         width: 100%;
         border-radius: 10px;
-        margin-top: 4px;
+        margin-top: 6px;
+        background: #fff;
+      }
+
+      .kit-details {
+        margin-top: 8px;
+        background: rgba(106, 59, 168, 0.04);
+        border: 1px solid rgba(106, 59, 168, 0.12);
+        border-radius: 10px;
+        padding: 8px 10px;
+      }
+
+      details > summary {
+        cursor: pointer;
+        font-size: 0.84rem;
+        font-weight: 800;
+        color: #3a2b60;
+        list-style: none;
+        outline: none;
+      }
+
+      details > summary::-webkit-details-marker { display: none; }
+
+      .kit-items {
+        margin: 8px 0 0;
+        padding-left: 18px;
+        font-size: 0.82rem;
+        color: #333;
+        line-height: 1.35;
+      }
+
+      .kit-items li { margin-bottom: 4px; }
+
+      .custom-fields {
+        margin-top: 10px;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px dashed #b9b3c8;
+        background: #fff;
+      }
+
+      .custom-hint {
+        margin: 0;
+        font-size: 0.78rem;
+        color: #777;
       }
 
       button {
@@ -216,9 +293,7 @@
         margin-top: 14px;
       }
 
-      button:active {
-        transform: scale(0.98);
-      }
+      button:active { transform: scale(0.98); }
 
       .note {
         font-size: 0.78rem;
@@ -227,9 +302,7 @@
         text-align: center;
       }
 
-      .hidden {
-        display: none;
-      }
+      .hidden { display: none; }
     </style>
   </head>
   <body>
@@ -410,64 +483,59 @@
           <input type="text" id="emCP" name="emCP" />
         </fieldset>
 
-        <!-- 4. Paquete de inicio: только один -->
+        <!-- 4. Paquete de inicio: elige solo uno -->
         <p class="kits-title">Paquete de Inicio (elige solo uno)</p>
-        <div class="kits-grid">
-          <!-- Ultimate Practitioners Kit -->
-          <label class="kit-option">
-            <div class="kit-header">
-              <input
-                type="checkbox"
-                class="kit-checkbox"
-                name="kit"
-                value="Ultimate Practitioners Kit $24,675"
-              />
-              <div>
-                <div class="kit-title">Ultimate Practitioners Kit</div>
-                <div class="kit-price">$24,675</div>
-                <div class="kit-credits">150/300 créditos</div>
-              </div>
-            </div>
-            <img src="3.png" alt="Ultimate Practitioners Kit" class="kit-img" />
-          </label>
+        <div class="kits-grid" id="kitsGrid"></div>
 
-          <!-- Advanced Kit -->
-          <label class="kit-option">
-            <div class="kit-header">
-              <input
-                type="checkbox"
-                class="kit-checkbox"
-                name="kit"
-                value="Advanced Kit $19,435"
-              />
-              <div>
-                <div class="kit-title">Advanced Kit</div>
-                <div class="kit-price">$19,435</div>
-                <div class="kit-credits">90/180 créditos</div>
-              </div>
-            </div>
-            <img src="2.png" alt="Advanced Kit" class="kit-img" />
-          </label>
+        <!-- 7. Paquete personalizado (se muestra solo si eliges la opción 7) -->
+        <div id="customKitFields" class="custom-fields hidden">
+          <p class="group-title">Paquete personalizado</p>
 
-          <!-- Basic Kit -->
-          <label class="kit-option">
-            <div class="kit-header">
+          <label for="customKitTitle">Nombre del paquete</label>
+          <input
+            type="text"
+            id="customKitTitle"
+            name="customKitTitle"
+            placeholder="Ej. Mi Kit Personalizado"
+          />
+
+          <div class="row-2">
+            <div>
+              <label for="customKitPrice">Su precio</label>
               <input
-                type="checkbox"
-                class="kit-checkbox"
-                name="kit"
-                value="Basic Kit $7,290"
+                type="text"
+                id="customKitPrice"
+                name="customKitPrice"
+                placeholder="Ej. Mex$12,345.00"
               />
-              <div>
-                <div class="kit-title">Basic Kit</div>
-                <div class="kit-price">$7,290</div>
-                <div class="kit-credits">30/60 créditos</div>
-              </div>
             </div>
-            <img src="1.png" alt="Basic Kit" class="kit-img" />
-          </label>
+            <div>
+              <label for="customKitCredits">Créditos</label>
+              <input
+                type="text"
+                id="customKitCredits"
+                name="customKitCredits"
+                placeholder="Ej. 50 cr"
+              />
+            </div>
+          </div>
+
+          <label for="customKitItems">Contenido / Observaciones</label>
+          <textarea
+            id="customKitItems"
+            name="customKitItems"
+            rows="5"
+            placeholder="Escribe aquí lo que necesitas (productos, cantidades, etc.)"
+          ></textarea>
+
+          <p class="custom-hint">
+            Tip: puedes copiar y pegar una lista, por ejemplo: "2 EssentOil+, 300 ml".
+          </p>
         </div>
+
         <!-- Nueva pregunta -->
+
+
         <label for="partnerInvito" class="group-title"
           >¿Qué Partner te invitó a Zinzino?</label
         >
@@ -480,8 +548,7 @@
 
         <button type="submit">Guardar registro</button>
         <p class="note">
-          Por ahora los datos solo se muestran en pantalla. Luego conectaremos
-          este formulario con la segunda hoja de tu Google Sheets.
+          Al enviar, tus datos se guardan automáticamente en tu Google Sheets.
         </p>
       </form>
     </div>
