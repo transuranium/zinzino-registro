@@ -10,7 +10,7 @@
  * 5) Copy the Web App URL and paste it into script.js as SCRIPT_URL.
  */
 
-const SPREADSHEET_ID = "PASTE_SPREADSHEET_ID_HERE";
+const SPREADSHEET_ID = "1-spk5axVOhxSrlxLf_3-bHDgMyguvgjV9JxrEin1eo8";
 
 const SHEET_PARTICIPANTES = "Participantes";
 const SHEET_PARTNER = "Partner";

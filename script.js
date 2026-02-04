@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // === Unico URL (Google Apps Script Web App) ===
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbwqrGe0v-rhKIH8do4vF2mwzdZ_0Ykk5GlAO6BkCtsMs15kiFanX4ML8sGLJFuO1JSd2Q/exec";
+  "https://script.google.com/macros/s/AKfycbz3c02XtoN3qBAG5ZCAwk21vSolfM6pl0e_L8_rP14Y_GMwA6vJrZt6deRwHMESIvGZyQ/exec";
 
 /* ==========================================================
    1) FORMULARIO PARTICIPANTES (Hoja 1)
@@ -66,26 +66,6 @@ const PARTNER_KITS = [
       "2 ZinoBiotic+, 180 g",
       "2 Skin Serum, 50 ml",
       "2 Viv^+, 60 tablets",
-      "10 Dosage Cups",
-      "10 Zinzino Lookbook",
-      "1 Express Start",
-      "1-month access to Zinzino's GoCore App, our digital educational Partner tool with videos & audios",
-    ],
-  },
-  {
-    id: "health",
-    title: "Health Kit",
-    price: "Mex$14,575.00",
-    savings: "Ahorras 48 %",
-    credits: "65.00 cr",
-    priceNoSub: "Mex$27,950.00",
-    img: "2.png",
-    items: [
-      "3 EssentOil+, 300 ml",
-      "5 EssentOil+, 100 ml",
-      "4 BalanceTest",
-      "2 Xtend, 60 tablets",
-      "2 ZinoBiotic+, 180 g",
       "10 Dosage Cups",
       "10 Zinzino Lookbook",
       "1 Express Start",
@@ -178,6 +158,64 @@ const PARTNER_KITS = [
       "1-month access to Zinzino's GoCore App, our digital educational Partner tool with videos & audios",
     ],
   },
+
+  // === Nuevos kits (IDs 1, 2, 3) ===
+  {
+    id: "1",
+    title: "Basic Sanki Kit",
+    price: "Mex$7,290.00",
+    savings: "Ahorras 45 %",
+    credits: "30.00 cr",
+    priceNoSub: "Mex$13,316.00",
+    img: "basic-sanki.png",
+    tagline:
+      "A simple Sanki starter set to begin your journey with the core products and a straightforward setup for day one.",
+    items: [
+      "2 BelAge",
+      "1 Kronuit Fire 2.0",
+      "1 Inner 7 con Yuzim",
+      "1 Hasaki Chocolate",
+    ],
+  },
+  {
+    id: "2",
+    title: "Basic Mixed Kit",
+    price: "Mex$7,290.00",
+    savings: "Ahorras 31 %",
+    credits: "30.00 cr",
+    priceNoSub: "Mex$10,495.00",
+    img: "basic-mixed.png",
+    tagline:
+      "A balanced mix of test + essentials, combining key products to start building routine and results from the beginning.",
+    items: [
+      "1 BelAge",
+      "1 Kronuit Fire 2.0",
+      "1 Inner 7 con Yuzim",
+      "1 BalanceTest",
+      "1 EssentOil+, 300 ml",
+    ],
+  },
+  {
+    id: "3",
+    title: "Basic Kit",
+    tagline:
+      "The ideal kick-off for your business! The Basic Kit provides the essential tools and resources to help you begin your journey with confidence. It’s designed to inspire and support your development, helping you learn, share, and grow as a Partner from day one.",
+    price: "Mex$7,290.00",
+    savings: "Ahorras 38 %",
+    credits: "30.00 cr",
+    priceNoSub: "Mex$11,832.00",
+    img: "basic-kit.png",
+    items: [
+      "3 EssentOil+, 300 ml",
+      "1 BalanceTest",
+      "1 Skin Serum, 50 ml",
+      "1 Dosage Cup",
+      "10 Zinzino Lookbook",
+      "1 Express Start",
+      "1-month access to Zinzino's GoCore App, our digital educational Partner tool with videos & audios",
+    ],
+  },
+
   {
     id: "custom",
     title: "Paquete personalizado",
@@ -191,6 +229,7 @@ const PARTNER_KITS = [
     isCustom: true,
     items: [],
   },
+
 ];
 
 function initRegistroPartner() {
