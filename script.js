@@ -80,7 +80,7 @@ const PARTNER_KITS = [
       "Kickstart your Zinzino journey by investing in our top-selling products with an amazing opportunity to get a full refund after 12 months!",
     extra:
       "Here’s all you need you to do:\n• Keep your monthly Z4F AutoOrder active for one full year.\n• Gain 25 Premier Kit Customers.\n• Qualify for the A-Team by the end of the 12th month.",
-    price: "Mex$24,675.00",
+    price: "Mex$25,169.00",
     savings: "Ahorras 64 %",
     credits: "150.00 cr",
     priceNoSub: "Mex$67,700.00",
@@ -107,7 +107,7 @@ const PARTNER_KITS = [
       "Kickstart your Zinzino journey by investing in our top-selling products with an amazing opportunity to get a full refund after 12 months!",
     extra:
       "Here’s all you need you to do:\n• Keep your monthly Z4F AutoOrder active for one full year.\n• Gain 25 Premier Kit Customers.\n• Qualify for the A-Team by the end of the 12th month.",
-    price: "Mex$24,675.00",
+    price: "Mex$25,169.00",
     savings: "Ahorras 64 %",
     credits: "150.00 cr",
     priceNoSub: "Mex$68,400.00",
@@ -125,7 +125,7 @@ const PARTNER_KITS = [
   {
     id: "ultimate_sanki",
     title: "Ultimate Sanki Kit",
-    price: "Mex$24,675.00",
+    price: "Mex$25,169.00",
     savings: "Ahorras 43 %",
     credits: "150.00 cr",
     priceNoSub: "Mex$42,979.00",
@@ -142,7 +142,7 @@ const PARTNER_KITS = [
   {
     id: "ultimate_mixed",
     title: "Ultimate Mixed Kit",
-    price: "Mex$24,675.00",
+    price: "Mex$25,169.00",
     savings: "Ahorras 58 %",
     credits: "150.00 cr",
     priceNoSub: "Mex$58,946.00",
