@@ -266,19 +266,6 @@
 
       .kit-items li { margin-bottom: 4px; }
 
-      .custom-fields {
-        margin-top: 10px;
-        padding: 12px;
-        border-radius: 12px;
-        border: 1px dashed #b9b3c8;
-        background: #fff;
-      }
-
-      .custom-hint {
-        margin: 0;
-        font-size: 0.78rem;
-        color: #777;
-      }
 
       button {
         width: 100%;
@@ -487,51 +474,6 @@
         <p class="kits-title">Paquete de Inicio (elige solo uno)</p>
         <div class="kits-grid" id="kitsGrid"></div>
 
-        <!-- 7. Paquete personalizado (se muestra solo si eliges la opción 7) -->
-        <div id="customKitFields" class="custom-fields hidden">
-          <p class="group-title">Paquete personalizado</p>
-
-          <label for="customKitTitle">Nombre del paquete</label>
-          <input
-            type="text"
-            id="customKitTitle"
-            name="customKitTitle"
-            placeholder="Ej. Mi Kit Personalizado"
-          />
-
-          <div class="row-2">
-            <div>
-              <label for="customKitPrice">Su precio</label>
-              <input
-                type="text"
-                id="customKitPrice"
-                name="customKitPrice"
-                placeholder="Ej. Mex$12,345.00"
-              />
-            </div>
-            <div>
-              <label for="customKitCredits">Créditos</label>
-              <input
-                type="text"
-                id="customKitCredits"
-                name="customKitCredits"
-                placeholder="Ej. 50 cr"
-              />
-            </div>
-          </div>
-
-          <label for="customKitItems">Contenido / Observaciones</label>
-          <textarea
-            id="customKitItems"
-            name="customKitItems"
-            rows="5"
-            placeholder="Escribe aquí lo que necesitas (productos, cantidades, etc.)"
-          ></textarea>
-
-          <p class="custom-hint">
-            Tip: puedes copiar y pegar una lista, por ejemplo: "2 EssentOil+, 300 ml".
-          </p>
-        </div>
 
         <!-- Nueva pregunta -->
 
