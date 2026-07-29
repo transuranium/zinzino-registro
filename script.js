@@ -88,7 +88,6 @@ const PARTNER_KITS = [
     items: [
       "10 EssentOil+ Orange Lemon Mint, 300 ml",
       "10 BalanceTest",
-      "4 EssentOil+ Orange Lemon Mint, 100 ml",
       "3 ZinoBiotic+",
       "3 Xtend",
       "3 Viv^+",
